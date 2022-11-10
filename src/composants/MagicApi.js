@@ -50,7 +50,7 @@ function TopTroisListe() {
             });
     }, [])
     useEffect(() => {
-        console.log(data);
+        //console.log(data);
     }, [data])
     return <div>
         {(Array.isArray(data.cards) && data.cards.map(item => {
