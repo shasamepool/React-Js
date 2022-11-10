@@ -1,3 +1,16 @@
+
+Idée :  
+    Page principale la liste des cartes avec leurs nom et l'image
+        - Barre de recherche par nom
+        - Click sur carte ouvre autre page
+    Page secondaire page détailler d'une carte
+    Page mon deck ?
+    Page carte de la semaine ?
+
+
+# ------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
