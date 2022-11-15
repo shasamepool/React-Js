@@ -2,6 +2,7 @@ import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from "react";
 
+var count = 0;
 
 function ListeHome() {
     return (
@@ -40,7 +41,7 @@ function ComposantListe() {
 
 function TopTroisListe() {
     const [data, setData] = useState([]);
-    var count = 0;
+
     useEffect(() => {
         fetch('https://api.magicthegathering.io/v1/cards?supertypes=Legendary&types=Creature')
             .then(json => json.json())
@@ -52,14 +53,14 @@ function TopTroisListe() {
     useEffect(() => {
         //console.log(data);
     }, [data])
-    return <div>
+    return <div className='conteneurPodium'>
         {(Array.isArray(data.cards) && data.cards.map(item => {
             if (count > 2) {
                 return null;
             }
             if (item.imageUrl !== undefined) {
                 count++;
-                return <PlacePodium card={item} position={count} />
+                return <PlacePodium card={item} />
             }
             return null;
         }))}
@@ -67,7 +68,6 @@ function TopTroisListe() {
 }
 
 function SousComposant(card) {
-    //console.log(card.card.id);
     const [showImg, setShowImg] = useState(false);
     const classCarte = `carte ${card.card.types[0]}`;
     var espece = card.card.subtypes;
@@ -101,10 +101,10 @@ function SousComposant(card) {
     )
 }
 
-function PlacePodium(card, position) {
+function PlacePodium(card) {
     return (
-        <div className='item' key={card.card.id}>
-            <div className="card carte">
+        <div className="item" key={card.card.id}>
+            <div className="card carte text-bg-warning">
                 <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
                 <div className="card-body">
                     <h5 className="card-title" align="center">{card.card.name}</h5>

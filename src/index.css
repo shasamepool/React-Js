@@ -19,6 +19,8 @@ code {
 }
 
 .item {
+  margin-left: 70px;
+  padding-left: 90px;
   padding-top: 25px;
   width: 270px;
   justify-self: center;
@@ -88,6 +90,11 @@ code {
   width: 280px;
   margin-top: 25px;
   padding-left: 70px;
+}
+
+.conteneurPodium {
+  display: flex;
+  background-color: gray;
 }
 
 hr {
