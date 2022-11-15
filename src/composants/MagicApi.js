@@ -18,7 +18,7 @@ function ListePodium() {
 function ComposantListe() {
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch('https://api.magicthegathering.io/v1/cards')
+        fetch('https://api.magicthegathering.io/v1/cards?types=Creature|Sorcery|Artifact')
             .then(json => json.json())
             .then(donnee => { setData((data) => data = donnee); })
             .catch(error => {
@@ -67,22 +67,44 @@ function TopTroisListe() {
 }
 
 function SousComposant(card) {
+    //console.log(card.card.id);
+    const [showImg, setShowImg] = useState(false);
+    const classCarte = `carte ${card.card.types[0]}`;
+    var espece = card.card.subtypes;
+    var histoire = card.card.flavor;
+    if (espece === undefined) {
+        espece = "Inconnu";
+    }
+    if (histoire === undefined) {
+        histoire = "Ce personnage est très mystérieux personne ne connait ses origines"
+    }
     return (
-        <div className='item' key={card.card.id}>
-            <div className="card">
-                <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
-                <div className="card-body">
-                    <h5 className="card-title" align="center">{card.card.name}</h5>
+        <div className='parentCarte'>
+            {!showImg && (
+                <div className={classCarte} onMouseEnter={() => setShowImg(true)}>
+                    <div className='inside'>
+                        <h3 className="titleCard">{card.card.name}</h3>
+                    </div>
+                    <p className='info'><b>Espèce : </b>{espece}</p>
+                    <p className='info'><b>Rareté : </b>{card.card.rarity}</p>
+                    <p className='info'><b>Coût : </b>{card.card.cmc}</p>
+                    <p className='description'><b>Description : </b>{histoire}</p>
+                </div >
+            )}
+            {showImg && (
+                <div className='carteImage' onMouseLeave={() => setShowImg(false)}>
+                    <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
                 </div>
-            </div>
-        </div>
+            )}
+        </div >
+
     )
 }
 
 function PlacePodium(card, position) {
     return (
         <div className='item' key={card.card.id}>
-            <div className="card">
+            <div className="card carte">
                 <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
                 <div className="card-body">
                     <h5 className="card-title" align="center">{card.card.name}</h5>
