@@ -18,25 +18,55 @@ function ListePodium() {
 
 function ComposantListe() {
     const [data, setData] = useState([]);
+    const [select, setSelect] = useState("aucun");
+    var Creature = "btn btn-secondary"
+    var Sorcery = "btn btn-secondary"
+    var Artifact = "btn btn-secondary"
+    var paramRequete = "Creature|Sorcery|Artifact"
+    switch (select) {
+        case "Creature":
+            Creature = "btn btn-primary"
+            paramRequete = "Creature"
+            break;
+        case "Sorcery":
+            Sorcery = "btn btn-primary"
+            paramRequete = "Sorcery"
+            break;
+        case "Artifact":
+            Artifact = "btn btn-primary"
+            paramRequete = "Artifact"
+            break;
+        default:
+            //console.log("Error Order");
+            break;
+    }
+
     useEffect(() => {
-        fetch('https://api.magicthegathering.io/v1/cards?types=Creature|Sorcery|Artifact')
+        fetch(`https://api.magicthegathering.io/v1/cards?types=${paramRequete}`)
             .then(json => json.json())
             .then(donnee => { setData((data) => data = donnee); })
             .catch(error => {
                 console.log(error);
             });
-    }, [])
+    }, [paramRequete])
     useEffect(() => {
         //console.log(data);
     }, [data])
-    return <div className='grid-container'>
-        {(Array.isArray(data.cards) && data.cards.map(item => {
-            if (item.imageUrl !== undefined) {
-                return <SousComposant card={item} />
-            }
-            return null;
-        }))}
-    </div>
+    return <div className='grey'>
+        <button class={Creature} onClick={() => { setSelect("Creature") }}>Creature</button >
+        <button class={Sorcery} onClick={() => { setSelect("Sorcery") }}>Sorcery</button>
+        <button class={Artifact} onClick={() => { setSelect("Artifact") }}>Artifact</button>
+
+
+        <div className='grid-container'>
+            {(Array.isArray(data.cards) && data.cards.map(item => {
+                if (item.imageUrl !== undefined) {
+                    return <SousComposant card={item} />
+                }
+                return null;
+            }))}
+        </div>
+    </div >
 }
 
 function TopTroisListe() {
