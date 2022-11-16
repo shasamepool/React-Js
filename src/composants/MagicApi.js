@@ -102,14 +102,37 @@ function SousComposant(card) {
     const classCarte = `carte ${card.card.types[0]}`;
     var espece = card.card.subtypes;
     var histoire = card.card.flavor;
+    var borderRarity = ""
     if (espece === undefined) {
         espece = "Inconnu";
     }
     if (histoire === undefined) {
         histoire = "Ce personnage est très mystérieux personne ne connait ses origines"
     }
+    switch (card.card.rarity) {
+        case "Common":
+            borderRarity = "parentCarte commun";
+            break;
+        case "Uncommon":
+            borderRarity = "parentCarte uncommon";
+            break;
+        case "Rare":
+            borderRarity = "parentCarte rare";
+            break;
+        case "Mythic Rare":
+            borderRarity = "parentCarte mythicRare";
+            break;
+        case "Special":
+            borderRarity = "parentCarte special";
+            break;
+        case "Basic Land":
+            borderRarity = "parentCarte basicLand";
+            break;
+    }
+
+
     return (
-        <div className='parentCarte'>
+        <div className={borderRarity}>
             {!showImg && (
                 <div className={classCarte} onMouseEnter={() => setShowImg(true)}>
                     <div className='inside'>

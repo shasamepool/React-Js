@@ -91,12 +91,36 @@ code {
   height: 430px;
   width: 280px;
   margin-top: 25px;
-  padding-left: 70px;
+  margin-left: 70px !important;
 }
 
 .conteneurPodium {
   display: flex;
   background-color: gray;
+}
+
+.commun {
+  outline: 5px solid rgb(237, 242, 244);
+}
+
+.uncommon {
+  outline: 5px solid rgb(76, 116, 247);
+}
+
+.rare {
+  outline: 5px solid rgb(94, 80, 162);
+}
+
+.mythicRare {
+  outline: 5px solid rgb(194, 6, 252);
+}
+
+.special {
+  outline: 5px solid rgba(90, 241, 165, 0.89);
+}
+
+.basicLand {
+  outline: 3px solid gold;
 }
 
 hr {
