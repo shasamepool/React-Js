@@ -12,6 +12,9 @@ function Navbar() {
                         <li className="nav-item">
                             <a className="nav-link" href="/page2">Top</a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/favoris">Favoris</a>
+                        </li>
 
                     </ul>
                 </div>

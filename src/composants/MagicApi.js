@@ -2,6 +2,8 @@ import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from "react";
 import Fuse from 'fuse.js';
+import getCssRarity from '../helper/rarity_helper.js';
+import {connect} from "react-redux";
 
 var count = 0;
 
@@ -124,6 +126,45 @@ function ComposantListe() {
     }
 }
 
+function SousComposant(card) {
+    const [showImg, setShowImg] = useState(false);
+    const classCarte = `carte ${card.card.types[0]}`;
+    var espece = card.card.subtypes;
+    var histoire = card.card.flavor;
+    var borderRarity = "parentCarte"
+    if (espece === undefined) {
+        espece = "Inconnu";
+    }
+    if (histoire === undefined) {
+        histoire = "Ce personnage est très mystérieux personne ne connait ses origines"
+    }
+
+    borderRarity += getCssRarity(card.card.rarity);
+
+    return (
+        <div className={borderRarity}>
+            {!showImg && (
+                <div className={classCarte} onMouseEnter={() => setShowImg(true)}>
+                    <div className='inside'>
+                        <h3 className="titleCard">{card.card.name}</h3>
+                    </div>
+                    <p className='info'><b>Espèce : </b>{espece}</p>
+                    <p className='info'><b>Rareté : </b>{card.card.rarity}</p>
+                    <p className='info'><b>Coût : </b>{card.card.cmc}</p>
+                    <p className='description'><b>Description : </b>{histoire}</p>
+                </div >
+            )}
+            {showImg && (
+                <div className='carteImage' onMouseLeave={() => setShowImg(false)}>
+                    <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
+                </div>
+            )}
+        </div >
+
+    )
+}
+
+
 function TopTroisListe() {
     const [data, setData] = useState([]);
 
@@ -152,67 +193,6 @@ function TopTroisListe() {
     </div>
 }
 
-function SousComposant(card) {
-    const [showImg, setShowImg] = useState(false);
-    const classCarte = `carte ${card.card.types[0]}`;
-    var espece = card.card.subtypes;
-    var histoire = card.card.flavor;
-    var borderRarity = ""
-    if (espece === undefined) {
-        espece = "Inconnu";
-    }
-    if (histoire === undefined) {
-        histoire = "Ce personnage est très mystérieux personne ne connait ses origines"
-    }
-    switch (card.card.rarity) {
-        case "Common":
-            borderRarity = "parentCarte commun";
-            break;
-        case "Uncommon":
-            borderRarity = "parentCarte uncommon";
-            break;
-        case "Rare":
-            borderRarity = "parentCarte rare";
-            break;
-        case "Mythic Rare":
-            borderRarity = "parentCarte mythicRare";
-            break;
-        case "Special":
-            borderRarity = "parentCarte special";
-            break;
-        case "Basic Land":
-            borderRarity = "parentCarte basicLand";
-            break;
-        default:
-            borderRarity = "parentCarte";
-            //console.log("Error bordure color");
-            break;
-    }
-
-
-    return (
-        <div className={borderRarity}>
-            {!showImg && (
-                <div className={classCarte} onMouseEnter={() => setShowImg(true)}>
-                    <div className='inside'>
-                        <h3 className="titleCard">{card.card.name}</h3>
-                    </div>
-                    <p className='info'><b>Espèce : </b>{espece}</p>
-                    <p className='info'><b>Rareté : </b>{card.card.rarity}</p>
-                    <p className='info'><b>Coût : </b>{card.card.cmc}</p>
-                    <p className='description'><b>Description : </b>{histoire}</p>
-                </div >
-            )}
-            {showImg && (
-                <div className='carteImage' onMouseLeave={() => setShowImg(false)}>
-                    <img src={card.card.imageUrl} alt="Erreur Chargement d'img"></img>
-                </div>
-            )}
-        </div >
-
-    )
-}
-
 function PlacePodium(card) {
     return (
         <div className="item" key={card.card.id}>
@@ -226,4 +206,14 @@ function PlacePodium(card) {
     )
 }
 
-export { ListeHome, ListePodium };
+function MesFavoris({favoris}){
+    console.log(favoris)
+}
+
+export const FavorisListStore = connect(
+    (state) => ({
+        favoris: state.favoris
+    })
+)(MesFavoris)
+
+export { ListeHome, ListePodium, MesFavoris  };
